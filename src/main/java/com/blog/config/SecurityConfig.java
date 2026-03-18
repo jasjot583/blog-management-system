@@ -26,8 +26,10 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
-                        .anyRequest().authenticated()
-                )
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**")
+                        .permitAll()
+                        .requestMatchers("/", "/index.html", "/*.css", "/*.js", "/assets/**", "/error").permitAll()
+                        .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthFilter,
                         org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);
 

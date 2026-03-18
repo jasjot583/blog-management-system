@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Blog App</title>
+    <meta name="description" content="A premium blog management system">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="app.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand" onclick="loadFeed()">
+                <i data-lucide="pen-tool"></i>
+                <span>BlogSpace</span>
+            </div>
+
+            <!-- Search Bar (Only visible when logged in) -->
+            <div class="nav-search hidden" id="nav-search-container">
+                <i data-lucide="search" class="search-icon"></i>
+                <input type="text" id="search-input" placeholder="Search posts..." oninput="handleSearch()">
+            </div>
+
+            <div class="nav-links" id="nav-links">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main id="app-content" class="container">
+        <div class="hero-section" id="hero-section">
+            <h1>Share your voice with the world.</h1>
+            <p>Join our community of writers and readers today.</p>
+            <button class="btn btn-primary btn-large" onclick="openModal('register')">Get Started</button>
+        </div>
+
+        <div id="feed-section" class="hidden">
+            <!-- URL Scanner Box -->
+            <div class="url-scanner-card glass-card">
+                <h2><i data-lucide="shield-check"></i> Paste a URL to Scan</h2>
+                <div class="scanner-input-group">
+                    <input type="url" id="scanner-input" placeholder="https://example.com" autocomplete="off">
+                    <button class="btn btn-primary" onclick="scanUrl()" id="scan-btn">Analyze</button>
+                </div>
+                <div id="scanner-result" class="scanner-result hidden">
+                    <!-- Results injected here -->
+                </div>
+            </div>
+
+            <div class="feed-header">
+                <h2>Latest Posts</h2>
+                <button class="btn btn-primary btn-sm" onclick="openModal('post')">
+                    <i data-lucide="plus"></i> New Post
+                </button>
+            </div>
+            <div id="posts-grid" class="posts-grid">
+                <!-- Posts will be injected here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Auth Modal -->
+    <div class="modal hidden" id="auth-modal">
+        <div class="modal-backdrop" onclick="closeModal('auth')"></div>
+        <div class="modal-content glass-card">
+            <button class="modal-close" onclick="closeModal('auth')"><i data-lucide="x"></i></button>
+            <h2 id="auth-title">Welcome Back</h2>
+            <form id="auth-form" onsubmit="handleAuth(event)">
+                <div class="input-group" id="username-group" style="display: none;">
+                    <label>Username</label>
+                    <input type="text" id="auth-username" placeholder="johndoe">
+                </div>
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" id="auth-email" required placeholder="john@example.com">
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="auth-password" required placeholder="••••••••">
+                </div>
+                <div id="auth-error" class="error-msg hidden">Error message</div>
+                <button type="submit" class="btn btn-primary btn-full" id="auth-submit-btn">Login</button>
+                <div class="modal-footer">
+                    <span id="auth-toggle-text">Don't have an account?</span>
+                    <a href="#" onclick="toggleAuthMode()">Sign up</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Post Modal (Create / Edit) -->
+    <div class="modal hidden" id="post-modal">
+        <div class="modal-backdrop" onclick="closeModal('post')"></div>
+        <div class="modal-content glass-card large">
+            <button class="modal-close" onclick="closeModal('post')"><i data-lucide="x"></i></button>
+            <h2 id="post-modal-title">Create Post</h2>
+            <form id="post-form" onsubmit="handlePostSubmit(event)">
+                <input type="hidden" id="post-id">
+                <div class="input-group">
+                    <label>Title</label>
+                    <input type="text" id="post-title" required placeholder="An interesting title...">
+                </div>
+                <div class="input-group">
+                    <label>Content</label>
+                    <textarea id="post-content" required rows="8" placeholder="Write your thoughts here..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('post')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Publish</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

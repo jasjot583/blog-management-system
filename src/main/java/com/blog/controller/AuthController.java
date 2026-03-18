@@ -1,8 +1,7 @@
 package com.blog.controller;
 
 import com.blog.dto.LoginDto;
-import com.blog.entity.User;
-import com.blog.service.AuthService;  // ← ADD THIS LINE
+import com.blog.service.AuthService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,7 +16,7 @@ public class AuthController {
 
     // REGISTER USER
     @PostMapping("/register")
-    public User register(@RequestBody User user) {
+    public String register(@RequestBody com.blog.entity.User user) {
         return authService.register(user);
     }
 
@@ -27,8 +26,7 @@ public class AuthController {
 
         String token = authService.login(
                 loginDto.getEmail(),
-                loginDto.getPassword()
-        );
+                loginDto.getPassword());
 
         return token;
     }
